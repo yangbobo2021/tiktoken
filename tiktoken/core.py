@@ -5,8 +5,12 @@ from concurrent.futures import ThreadPoolExecutor
 from typing import AbstractSet, Collection, Literal, NoReturn, Optional, Union
 
 import regex
-
-from tiktoken import _tiktoken
+try:
+    from tiktoken import _tiktoken
+    from .python_tiktoken import CoreBPE
+except ImportError:
+    print("Unable to import rust py binding for _tiktoken, must use pure python implementation")
+    from .python_tiktoken import CoreBPE
 
 
 class Encoding:
@@ -18,6 +22,7 @@ class Encoding:
         mergeable_ranks: dict[bytes, int],
         special_tokens: dict[str, int],
         explicit_n_vocab: Optional[int] = None,
+        use_pure_python: bool = False
     ):
         """Creates an Encoding object.
 
@@ -47,7 +52,11 @@ class Encoding:
             assert len(mergeable_ranks) + len(special_tokens) == explicit_n_vocab
             assert self.max_token_value == explicit_n_vocab - 1
 
-        self._core_bpe = _tiktoken.CoreBPE(mergeable_ranks, special_tokens, pat_str)
+        if use_pure_python:
+            self._core_bpe = CoreBPE(mergeable_ranks, special_tokens, pat_str)
+        else:    
+            self._core_bpe = _tiktoken.CoreBPE(mergeable_ranks, special_tokens, pat_str)
+
 
     def __repr__(self) -> str:
         return f"<Encoding {self.name!r}>"
