@@ -19,6 +19,7 @@ The port to python (from Rust) is 99% done with the help of GPT4 and these are t
 (so use it at your own risk but it should be trivial to compare both across a much diverse charset and
 phrases)
 
+```
 Encoding for 'a': [64]
 Encoding for '!': [0]
 Encoding for '1': [16]
@@ -68,6 +69,6 @@ Encoding for '
 ': [198]
 Encoding for '@@@': [19741, 31]
 Encoding for '###': [14711]
-
+```
 
 
