@@ -2,7 +2,7 @@ from typing import Dict, List, Callable, Union, Tuple
 from collections import defaultdict
 
 import threading
-import regex as re
+import re
 import copy
 
 MAX_NUM_THREADS = 128

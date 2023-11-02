@@ -5,7 +5,7 @@ import collections
 import itertools
 from typing import Optional
 
-import regex
+import re as regex
 
 import tiktoken
 
